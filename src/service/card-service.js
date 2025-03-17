@@ -1,12 +1,12 @@
 class MagicCardService {
-
-    constructor(page = 1) {
-        this.page = page;
+    static page = 1;
+    constructor() {
+        
     }
 
     getData() {
         const baseUrl = "https://api.magicthegathering.io/v1/cards";
-        const pageUrl = baseUrl + `?page=${this.page}`
+        const pageUrl = baseUrl + `?page=${MagicCardService.page}`
 
         return fetch(pageUrl)
             .then(res => res.json(res))
@@ -17,23 +17,24 @@ class MagicCardService {
     }
 
     nextPage() {
-        if (this.page < 937) {
-            this.page++;
+        if (MagicCardService.page < 937) {
+            MagicCardService.page++;
         } else {
-            this.page = 1;
+            MagicCardService.page = 1;
         }
         //max 937
     }
 
     prevPage() {
-        if (this.page > 1) {
-            this.page--;
+        if (MagicCardService.page > 1) {
+            MagicCardService.page--;
         } else {
-            this.page = 937;
+            MagicCardService.page = 937;
         }
     }
 
     getCardById(searchIndex) {
+        console.log(MagicCardService.page);
         return this.getData()
             .then(arrayCards => arrayCards.find(card => card.id === searchIndex));
             

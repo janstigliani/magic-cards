@@ -4,6 +4,8 @@ const service = new MagicCardService();
 
 const urlParams = new URLSearchParams(window.location.search);
 
+console.log(MagicCardService.page);
+
 const targetCardId = urlParams.get('id');
 service.getCardById(targetCardId).then(card => render(card));
 
@@ -15,6 +17,8 @@ function render(card) {
 
     const cardImage = document.createElement('img');
     cardImage.classList.add('card-img-detail');
+
+    console.log(card);
 
     if (!!card.imageUrl) {
 
