@@ -5,9 +5,10 @@ const service = new MagicCardService();
 const urlParams = new URLSearchParams(window.location.search);
 
 console.log(MagicCardService.page);
+console.log(urlParams)
 
 const targetCardId = urlParams.get('id');
-service.getCardById(targetCardId).then(card => render(card));
+service.getCardById2(targetCardId).then(card => render(card));
 
 function render(card) {
     const root = document.getElementById('root2');

@@ -1,12 +1,12 @@
 class MagicCardService {
-    static page = 1;
-    constructor() {
-        
+    static BASE_URL = "https://api.magicthegathering.io/v1/cards";
+    
+    constructor(page = 1) {
+        this.page = page;
     }
 
     getData() {
-        const baseUrl = "https://api.magicthegathering.io/v1/cards";
-        const pageUrl = baseUrl + `?page=${MagicCardService.page}`
+        const pageUrl = MagicCardService.BASE_URL + `?page=${this.page}`
 
         return fetch(pageUrl)
             .then(res => res.json(res))
@@ -17,27 +17,38 @@ class MagicCardService {
     }
 
     nextPage() {
-        if (MagicCardService.page < 937) {
-            MagicCardService.page++;
+        if (this.page < 937) {
+            this.page++;
         } else {
-            MagicCardService.page = 1;
+            this.page = 1;
         }
         //max 937
     }
 
     prevPage() {
-        if (MagicCardService.page > 1) {
-            MagicCardService.page--;
+        if (this.page > 1) {
+            this.page--;
         } else {
-            MagicCardService.page = 937;
+            this.page = 937;
         }
     }
 
-    getCardById(searchIndex) {
-        console.log(MagicCardService.page);
-        return this.getData()
-            .then(arrayCards => arrayCards.find(card => card.id === searchIndex));
+    // getCardById(searchId) {
+    //     console.log(this..page);
+    //     return this.getCard(searchId)
+    //         .then(arrayCards => arrayCards.find(card => card.id === searchId));
             
+    // }
+
+    getCardById2(searchId) {
+        const url = MagicCardService.BASE_URL + "/" + searchId;
+
+        return fetch(url)
+            .then(res => res.json(res))
+            .then(data => {
+                return data.card;
+            })
+            .catch(err => console.error(err));
     }
 
 }
